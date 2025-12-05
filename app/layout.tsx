@@ -6,6 +6,9 @@ import Providers from "./providers";
 export const metadata: Metadata = {
   title: "Nortus Dashboard",
   description: "Desafio Técnico - Front-End",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
