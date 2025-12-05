@@ -1,8 +1,14 @@
 "use client";
 
-import { ReactNode } from "react";
-import { ZustandProvider } from "@/store/zustand-provider";
+import { ReactNode, useEffect } from "react";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function Providers({ children }: { children: ReactNode }) {
-  return <ZustandProvider>{children}</ZustandProvider>;
+  const hydrate = useAuthStore((s) => s.hydrateFromStorage);
+
+  useEffect(() => {
+    hydrate();
+  }, [hydrate]);
+
+  return <>{children}</>;
 }

@@ -1,7 +1,13 @@
-export default function HomePage() {
-  return (
-    <main className="flex items-center justify-center h-screen">
-      <h1 className="text-3xl font-bold">Nortus Challenge</h1>
-    </main>
-  );
+// app/page.tsx
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
+export default async function RootPage() {
+  const token = (await cookies()).get("token")?.value;
+
+  if (!token) {
+    redirect("/auth/login"); 
+  }
+
+  redirect("/dashboard");
 }

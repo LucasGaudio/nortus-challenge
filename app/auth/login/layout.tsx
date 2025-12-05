@@ -1,4 +1,14 @@
-export default function LoginLayout({ children }: { children: React.ReactNode }) {
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
+export default async function LoginLayout({ children }: { children: React.ReactNode }) {
+  const token = (await cookies()).get("token")?.value;
+
+  // If user is already logged in, redirect to dashboard
+  if (token) {
+    redirect("/dashboard");
+  }
+
   return (
     <div className="min-h-screen w-full flex bg-[#0C1220]">
       {/* Coluna esquerda */}
@@ -21,9 +31,9 @@ export default function LoginLayout({ children }: { children: React.ReactNode })
         </div>
 
         {/* Imagem ilustrativa */}
-        <div className="rounded-3xl overflow-hidden shadow-2xl max-w-lg">
+        <div className="rounded-3xl overflow-hidden shadow-2xl max-w-lg ">
           <img
-            src="/login-illustration.png"
+            src="/images/login-image.png"
             alt="Ilustração"
             className="w-full h-full object-cover"
           />
