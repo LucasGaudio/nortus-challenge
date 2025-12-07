@@ -61,7 +61,7 @@ export default function TicketsPage() {
           <div className="flex justify-end mb-6">
             <button
               onClick={() => setOpen(true)}
-              className="px-4 py-2 bg-[#3B82F6] text-white rounded-xl"
+              className="cursor-pointer px-4 py-2 bg-[#3B82F6] text-white rounded-xl "
             >
               + Novo Ticket
             </button>

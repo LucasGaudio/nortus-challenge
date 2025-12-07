@@ -44,7 +44,7 @@ export function Sidebar() {
   }, [isDropdownOpen]);
 
   return (
-    <aside className="w-20 bg-[#0D1323] flex flex-col items-center py-8 gap-6 border-r border-gray-800">
+    <aside className="w-25 bg-[#20273E] flex flex-col items-center py-8 gap-10 border-r border-gray-800">
       
       {/* Logo */}
       <div className="text-xl font-bold text-blue-500">
