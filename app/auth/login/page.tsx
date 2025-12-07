@@ -55,6 +55,7 @@ export default function LoginPage() {
 
       // aqui é a mudança principal: o backend retorna APENAS o token
       const token = data?.access_token;
+      console.log('token', token )
 
       if (!token) {
         throw new Error("A API não retornou access_token");

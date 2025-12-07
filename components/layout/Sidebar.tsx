@@ -76,9 +76,27 @@ export default function Sidebar() {
         >
           🎫
         </Link>
-        <button className="p-3 rounded-lg hover:bg-gray-800 cursor-pointer transition-colors">💬</button>
+        <Link
+          href="/chat"
+          className={`p-3 rounded-lg cursor-pointer transition-colors ${
+            pathname === "/chat"
+              ? "bg-blue-600"
+              : "hover:bg-gray-800"
+          }`}
+        >
+          💬
+        </Link>
         <button className="p-3 rounded-lg hover:bg-gray-800 cursor-pointer transition-colors">👤</button>
-        <button className="p-3 rounded-lg hover:bg-gray-800 cursor-pointer transition-colors">📊</button>
+        <Link
+          href="/simulator"
+          className={`p-3 rounded-lg cursor-pointer transition-colors ${
+            pathname === "/simulator"
+              ? "bg-blue-600"
+              : "hover:bg-gray-800"
+          }`}
+        >
+          📊
+        </Link>
       </nav>
 
       <div className="mt-auto mb-6 relative" ref={dropdownRef}>
