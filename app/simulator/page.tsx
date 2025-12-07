@@ -2,13 +2,13 @@
 
 import { useSimulator } from "@/hooks/useSimulator";
 import { useSimulatorState } from "@/hooks/useSimulatorState";
-import { calcPlanValue } from "@/lib/calcPlanValue";
+import { calcPlanValue } from "@/lib/utils/calcPlanValue";
 import { Card } from "@/components/ui/Card";
 import { AdditionalCoverages } from "@/components/simulator/AdditionalCoverages";
 import { Sliders } from "@/components/simulator/Sliders";
 import { IndicatorCard } from "@/components/simulator/IndicatorsCard";
-import Sidebar from "@/components/layout/Sidebar";
-import Topbar from "@/components/layout/Topbar";
+import { Sidebar } from "@/components/layout/Sidebar";
+import Topbar  from "@/components/layout/Topbar";
 
 export default function SimulatorPage() {
   const { data, loading } = useSimulator();

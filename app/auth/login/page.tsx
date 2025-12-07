@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { api } from "@/lib/api";
+import { authService } from "@/lib/services/auth.service";
 import { toast } from "sonner";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
@@ -48,32 +48,29 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const { data } = await api.post("/auth/login", {
-        email: formData.email,
-        password: formData.password,
-      });
+      const response = await authService.login(formData.email, formData.password);
 
-      // aqui é a mudança principal: o backend retorna APENAS o token
-      const token = data?.access_token;
-      console.log('token', token )
+      // Backend returns only the token
+      const token = response?.access_token;
 
       if (!token) {
         throw new Error("A API não retornou access_token");
       }
 
-      // salva o token e o email do usuário (Zustand + cookie/localStorage)
+      // Save token and user email (Zustand + cookie/localStorage)
       login(formData.email, token);
 
       toast.success("Autenticado com sucesso!");
 
-      // redireciona para a área protegida
+      // Redirect to protected area
       router.replace("/dashboard");
-    } catch (err: any) {
-      const msg =
-        err?.response?.data?.message ||
-        "Erro ao tentar entrar. Verifique suas credenciais.";
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : "Erro ao tentar entrar. Verifique suas credenciais.";
 
-      toast.error(msg);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

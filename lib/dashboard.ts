@@ -1,6 +1,6 @@
-import { api } from "./api";
+import { dashboardService } from "./services/dashboard.service";
+import { DashboardData } from "@/types";
 
-export async function fetchDashboardData() {
-  const { data } = await api.get("/nortus-v1/dashboard");
-  return data;
+export async function fetchDashboardData(): Promise<DashboardData> {
+  return dashboardService.getDashboardData();
 }

@@ -1,13 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import BadgePriority from "./BadgePriority";
-import BadgeStatus from "./BadgeStatus";
-import { Ticket } from "@/app/tickets/page";
+import { BadgePriority } from "./BadgePriority";
+import { BadgeStatus } from "./BadgeStatus";
+import { Ticket } from "@/types";
 
 const ITEMS_PER_PAGE = 10;
 
-export default function TicketsTable({ tickets }: { tickets: Ticket[] }) {
+interface TicketsTableProps {
+  tickets: Ticket[];
+}
+
+export function TicketsTable({ tickets }: TicketsTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(tickets.length / ITEMS_PER_PAGE);
 

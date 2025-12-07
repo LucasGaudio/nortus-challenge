@@ -2,28 +2,31 @@
 
 import { useState } from "react";
 import { useCreateTicket } from "@/hooks/useCreateTicket";
+import { CreateTicketData, TicketPriority, TicketStatus } from "@/types";
 
-interface Props {
+interface NewTicketModalProps {
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-export default function NewTicketModal({ open, onClose, onSuccess }: Props) {
+export function NewTicketModal({ open, onClose, onSuccess }: NewTicketModalProps) {
   const { handleCreate, loading, error } = useCreateTicket();
 
-  const [form, setForm] = useState({
-    ticketId: "",
+  const [form, setForm] = useState<CreateTicketData>({
     client: "",
     email: "",
-    priority: "",
+    priority: "Média",
     responsible: "",
     subject: "",
-    status: "Aberto", // default do figma/swagger
+    status: "Aberto",
   });
 
-  function update(key: string, value: string) {
-    setForm((f) => ({ ...f, [key]: value }));
+  function updateField<K extends keyof CreateTicketData>(
+    key: K,
+    value: CreateTicketData[K]
+  ) {
+    setForm((prev) => ({ ...prev, [key]: value }));
   }
 
   async function onSubmit() {
@@ -59,7 +62,8 @@ export default function NewTicketModal({ open, onClose, onSuccess }: Props) {
             <input
               className="w-full mt-1 bg-[#111827] text-gray-200 px-4 py-3 rounded-xl outline-none border border-gray-700"
               placeholder="Nome da pessoa ou empresa"
-              onChange={(e) => update("client", e.target.value)}
+              value={form.client}
+              onChange={(e) => updateField("client", e.target.value)}
             />
           </div>
 
@@ -69,7 +73,8 @@ export default function NewTicketModal({ open, onClose, onSuccess }: Props) {
               type="email"
               className="w-full mt-1 bg-[#111827] text-gray-200 px-4 py-3 rounded-xl outline-none border border-gray-700"
               placeholder="E-mail de contato"
-              onChange={(e) => update("email", e.target.value)}
+              value={form.email}
+              onChange={(e) => updateField("email", e.target.value)}
             />
           </div>
 
@@ -77,9 +82,9 @@ export default function NewTicketModal({ open, onClose, onSuccess }: Props) {
             <label className="text-gray-300 text-sm">Prioridade</label>
             <select
               className="w-full mt-1 bg-[#111827] text-gray-200 px-4 py-3 rounded-xl border border-gray-700"
-              onChange={(e) => update("priority", e.target.value)}
+              value={form.priority}
+              onChange={(e) => updateField("priority", e.target.value as TicketPriority)}
             >
-              <option value="">Selecione</option>
               <option value="Urgente">Urgente</option>
               <option value="Média">Média</option>
               <option value="Baixa">Baixa</option>
@@ -91,7 +96,8 @@ export default function NewTicketModal({ open, onClose, onSuccess }: Props) {
             <input
               className="w-full mt-1 bg-[#111827] text-gray-200 px-4 py-3 rounded-xl border border-gray-700"
               placeholder="Quem será o responsável"
-              onChange={(e) => update("responsible", e.target.value)}
+              value={form.responsible}
+              onChange={(e) => updateField("responsible", e.target.value)}
             />
           </div>
 
@@ -101,7 +107,8 @@ export default function NewTicketModal({ open, onClose, onSuccess }: Props) {
               className="w-full mt-1 bg-[#111827] text-gray-200 px-4 py-3 rounded-xl border border-gray-700"
               placeholder="Resumo breve"
               rows={3}
-              onChange={(e) => update("subject", e.target.value)}
+              value={form.subject}
+              onChange={(e) => updateField("subject", e.target.value)}
             />
           </div>
         </div>

@@ -1,32 +1,32 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchDashboardData } from "@/lib/dashboard";
-import Sidebar from "@/components/layout/Sidebar";
+import { dashboardService } from "@/lib/services/dashboard.service";
+import { Sidebar } from "@/components/layout/Sidebar";
 import Topbar from "@/components/layout/Topbar";
-import KPIChart from "@/components/dashboard/KPIChart";
-import ConversionChart from "@/components/dashboard/ConversionChart";
-import ClientsMap from "@/components/dashboard/ClientsMap";
+import { KPIChart } from "@/components/dashboard/KPIChart";
+import { ConversionChart } from "@/components/dashboard/ConversionChart";
+import { ClientsMap } from "@/components/dashboard/ClientsMap";
 import { useProtectedRoute } from "@/hooks/useProtectedRoute";
+import { DashboardData } from "@/types";
 
 export default function DashboardPage() {
   useProtectedRoute();
 
-  const [dashboard, setDashboard] = useState<any>(null);
+  const [dashboard, setDashboard] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
-  console.log('Dashboard data:', dashboard?.activeClients.data);
 
   const kpiData = {
-    labels: dashboard?.kpisTrend?.labels,
-    arpu: dashboard?.kpisTrend?.arpuTrend?.data,
-    conversion: dashboard?.kpisTrend?.conversionTrend?.data,
-    retention: dashboard?.kpisTrend?.retentionTrend?.data,
-    churn: dashboard?.kpisTrend?.churnTrend?.data
+    labels: dashboard?.kpisTrend?.labels || [],
+    arpu: dashboard?.kpisTrend?.arpuTrend?.data || [],
+    conversion: dashboard?.kpisTrend?.conversionTrend?.data || [],
+    retention: dashboard?.kpisTrend?.retentionTrend?.data || [],
+    churn: dashboard?.kpisTrend?.churnTrend?.data || [],
   };
 
   const conversionData = {
-    labels: dashboard?.kpisTrend?.labels,
-    conversion: dashboard?.kpisTrend?.conversionTrend?.data
+    labels: dashboard?.kpisTrend?.labels || [],
+    conversion: dashboard?.kpisTrend?.conversionTrend?.data || [],
   };
 
   const mapData = dashboard?.activeClients?.data || [];
@@ -34,7 +34,7 @@ export default function DashboardPage() {
   useEffect(() => {
     async function loadData() {
       try {
-        const data = await fetchDashboardData();
+        const data = await dashboardService.getDashboardData();
         setDashboard(data);
       } catch (err) {
         console.error("Erro ao carregar dashboard:", err);

@@ -4,20 +4,21 @@ import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useAuthStore } from "@/store/useAuthStore";
+import { User } from "@/types";
 
-function getInitials(user: { email?: string } | null): string {
+function getInitials(user: User | null): string {
   if (!user) return "??";
-  
+
   if (user.email) {
     // Get first 2 letters from email (before @)
     const emailPart = user.email.split("@")[0];
     return emailPart.substring(0, 2).toUpperCase();
   }
-  
+
   return "??";
 }
 
-export default function Sidebar() {
+export function Sidebar() {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const initials = getInitials(user);

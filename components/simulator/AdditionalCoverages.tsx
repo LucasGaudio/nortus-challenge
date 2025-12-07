@@ -1,9 +1,4 @@
-interface Coverages {
-  rouboFurto: boolean;
-  colisao: boolean;
-  incendio: boolean;
-  fenomenos: boolean;
-}
+import { Coverages } from "@/types";
 
 interface AdditionalCoveragesProps {
   coverages: Coverages;
@@ -11,9 +6,9 @@ interface AdditionalCoveragesProps {
 }
 
 export function AdditionalCoverages({ coverages, setCoverages }: AdditionalCoveragesProps) {
-    function toggle(name: keyof Coverages) {
-      setCoverages(prev => ({ ...prev, [name]: !prev[name] }));
-    }
+  function toggle(name: keyof Coverages) {
+    setCoverages((prev) => ({ ...prev, [name]: !prev[name] }));
+  }
   
     return (
       <div className="mt-10 text-gray-300">

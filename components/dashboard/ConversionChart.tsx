@@ -1,16 +1,15 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { ConversionChartData } from "@/types";
+
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-interface Props {
-  data: {
-    labels: string[];
-    conversion: number[];
-  };
+interface ConversionChartProps {
+  data: ConversionChartData;
 }
 
-export default function ConversionChart({ data }: Props) {
+export function ConversionChart({ data }: ConversionChartProps) {
   const options: ApexCharts.ApexOptions = {
     chart: {
       type: "bar",

@@ -1,14 +1,6 @@
-import { api } from "./api";
-import { useAuthStore } from "@/store/useAuthStore";
+import { simulatorService } from "./services/simulator.service";
+import { SimulatorData } from "@/types";
 
-export async function fetchSimulator() {
-  const token = useAuthStore.getState().token;
-
-  const res = await api.get("/nortus-v1/simulador-planos", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return res.data;
+export async function fetchSimulator(): Promise<SimulatorData> {
+  return simulatorService.getSimulatorData();
 }

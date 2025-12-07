@@ -1,14 +1,6 @@
-import { api } from "./api";
-import { useAuthStore } from "@/store/useAuthStore";
+import { ticketsService } from "./services/tickets.service";
+import { CreateTicketData, Ticket } from "@/types";
 
-export async function createTicket(data: any) {
-  const token = useAuthStore.getState().token;
-
-  const res = await api.post("/tickets", data, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return res.data;
+export async function createTicket(data: CreateTicketData): Promise<Ticket> {
+  return ticketsService.create(data);
 }

@@ -2,10 +2,10 @@ import axios, { AxiosError } from "axios";
 import Cookies from "js-cookie";
 import { logoutAndRedirect } from "./auth";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "https://api.exemplo.com";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE ?? "https://nortus-challenge.api.stage.loomi.com.br";
 
 export const api = axios.create({
-  baseURL: "https://nortus-challenge.api.stage.loomi.com.br",
+  baseURL: API_BASE_URL,
   timeout: 15000,
 });
 
@@ -23,11 +23,11 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (res) => res,
   async (error: AxiosError) => {
-    // Se for 401 - token inválido/expirado, faz logout local e redireciona
+    // If 401 - invalid/expired token, logout and redirect
     if (error.response?.status === 401) {
       try {
-        // Aqui poderia entrar lógica de refresh token.
-        // Se não existir refresh, limpa sessão e redireciona.
+        // Could add refresh token logic here
+        // If no refresh token, clear session and redirect
         logoutAndRedirect();
       } catch (err) {
         logoutAndRedirect();

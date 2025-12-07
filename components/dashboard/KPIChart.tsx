@@ -2,21 +2,16 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import { KPIChartData } from "@/types";
 
-// ApexCharts precisa ser carregado dinamicamente no Next
+// ApexCharts needs to be loaded dynamically in Next.js
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-interface Props {
-  data: {
-    labels: string[];
-    arpu: number[];
-    conversion: number[];
-    churn: number[];
-    retention: number[];
-  };
+interface KPIChartProps {
+  data: KPIChartData;
 }
 
-export default function KPIChart({ data }: Props) {
+export function KPIChart({ data }: KPIChartProps) {
   const [selected, setSelected] = useState<"arpu" | "conversion" | "churn" | "retention">("arpu");
 
   const seriesMap = {

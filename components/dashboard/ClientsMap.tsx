@@ -7,7 +7,8 @@ import View from "ol/View";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
 import { fromLonLat } from "ol/proj";
-import { geocode } from "@/lib/geocode";
+import { geocode } from "@/lib/utils/geocode";
+import { Client } from "@/types";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import Feature from "ol/Feature";
@@ -17,13 +18,8 @@ import CircleStyle from "ol/style/Circle";
 import Fill from "ol/style/Fill";
 import Stroke from "ol/style/Stroke";
 
-interface Props {
-  clients: {
-    id: string;
-    name: string;
-    location: string;
-    secureType: string;
-  }[];
+interface ClientsMapProps {
+  clients: Client[];
 }
 
 // Color mapping based on secureType
@@ -37,7 +33,7 @@ const getMarkerColor = (secureType: string): string => {
   return colors[secureType.toLowerCase()] || "#6b7280"; // default gray
 };
 
-export default function ClientsMap({ clients }: Props) {
+export function ClientsMap({ clients }: ClientsMapProps) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<Map | null>(null);
 

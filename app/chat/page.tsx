@@ -5,7 +5,7 @@ import { UserMessage } from "@/components/chat/UserMessage";
 import { AssistantMessage } from "@/components/chat/AssistantMessage";
 import { IASuggestion } from "@/components/chat/IASuggestion";
 import { ChatInput } from "@/components/chat/ChatInput";
-import Sidebar from "@/components/layout/Sidebar";
+import { Sidebar } from "@/components/layout/Sidebar";
 import Topbar from "@/components/layout/Topbar";
 
 export default function ChatPage() {
@@ -46,7 +46,7 @@ export default function ChatPage() {
                   return (
                     <UserMessage
                       key={msg.id}
-                      author={msg.author}
+                      author={msg.author || ""}
                       content={msg.content}
                       timestamp={msg.timestamp}
                     />

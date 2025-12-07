@@ -1,26 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { api } from "@/lib/api";
-import Sidebar from "@/components/layout/Sidebar";
-import Topbar from "@/components/layout/Topbar";
-import SummaryCard from "@/components/tickets/SummaryCard";
-import SelectFilter from "@/components/tickets/SelectFilter";
-import TicketsTable from "@/components/tickets/TicketsTable";
-import NewTicketModal from "@/components/tickets/NewTicketModal";
-
-export interface Ticket {
-  id: string;
-  ticketId: string;
-  priority: "Urgente" | "Média" | "Baixa";
-  client: string;
-  email: string;
-  subject: string;
-  status: "Aberto" | "Em andamento" | "Fechado";
-  responsible: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { ticketsService } from "@/lib/services/tickets.service";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { SummaryCard } from "@/components/tickets/SummaryCard";
+import { SelectFilter } from "@/components/tickets/SelectFilter";
+import { TicketsTable } from "@/components/tickets/TicketsTable";
+import { NewTicketModal } from "@/components/tickets/NewTicketModal";
+import { Ticket } from "@/types";
 
 export default function TicketsPage() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -30,13 +17,13 @@ export default function TicketsPage() {
   const [priorityFilter, setPriorityFilter] = useState("Todos");
   const [responsibleFilter, setResponsibleFilter] = useState("Todos");
 
-  const fetchTickets = () => {
-    api
-      .get("/tickets")
-      .then((res) => {
-        setTickets(res.data.data);
-      })
-      .catch(console.error);
+  const fetchTickets = async () => {
+    try {
+      const data = await ticketsService.getAll();
+      setTickets(data);
+    } catch (error) {
+      console.error("Erro ao carregar tickets:", error);
+    }
   };
 
   useEffect(() => {
@@ -80,13 +67,13 @@ export default function TicketsPage() {
             </button>
           </div>
 
-          <NewTicketModal
-            open={open}
-            onClose={() => setOpen(false)}
-            onSuccess={() => {
-              fetchTickets();
-            }}
-          />
+        <NewTicketModal
+          open={open}
+          onClose={() => setOpen(false)}
+          onSuccess={() => {
+            fetchTickets();
+          }}
+        />
         </header>
 
         <div className="grid grid-cols-4 gap-6">

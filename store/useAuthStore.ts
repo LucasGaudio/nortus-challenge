@@ -1,49 +1,43 @@
 "use client";
 
 import { create } from "zustand";
-import { devtools, persist  } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 import { saveToken, saveUser, removeToken, removeUser, getUser, getToken } from "@/lib/auth";
+import { User } from "@/types";
 
-type User = {
-  id?: string;
-  name?: string;
-  email?: string;
-  // adicione os campos do seu dominio
-} | null;
-
-type AuthState = {
-  user: User;
+interface AuthState {
+  user: User | null;
   token: string | null;
-  setUser: (u: User) => void;
-  setToken: (t: string | null) => void;
+  setUser: (user: User | null) => void;
+  setToken: (token: string | null) => void;
   login: (email: string, token: string) => void;
   logout: () => void;
   hydrateFromStorage: () => void;
-};
+}
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    devtools((set, get) => ({
-      // estado inicial neutro (server-friendly)
+    devtools((set) => ({
+      // Initial state (server-friendly)
       user: null,
       token: null,
 
-      setUser: (u) => {
-        if (u) saveUser(u);
+      setUser: (user) => {
+        if (user) saveUser(user);
         else removeUser();
-        set({ user: u });
+        set({ user });
       },
 
-      setToken: (t) => {
-        if (t) saveToken(t);
+      setToken: (token) => {
+        if (token) saveToken(token);
         else removeToken();
-        set({ token: t });
+        set({ token });
       },
 
       login: (email, token) => {
-        // cria o objeto user a partir do email fornecido no login
+        // Create user object from email provided at login
         const user: User = { email };
-        // salva via helpers (cookie + localStorage) e atualiza o estado
+        // Save via helpers (cookie + localStorage) and update state
         saveUser(user);
         saveToken(token);
         set({ user, token });
@@ -59,18 +53,18 @@ export const useAuthStore = create<AuthState>()(
       },
 
       hydrateFromStorage: () => {
-        // força leitura dos helpers (útil em providers se necessário)
-        const u = getUser();
-        const t = getToken();
-        set({ user: u, token: t });
+        // Force read from helpers (useful in providers if needed)
+        const user = getUser();
+        const token = getToken();
+        set({ user, token });
       },
     })),
     {
-      name: "auth-storage", // chave no localStorage
+      name: "auth-storage", // localStorage key
       partialize: (state) => ({ user: state.user, token: state.token }),
     }
   )
 );
 
-// Exporta também a referência direta ao store para usos fora de React (server, redirects)
+// Export direct store reference for use outside React (server, redirects)
 export const authStore = useAuthStore;
