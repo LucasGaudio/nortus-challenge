@@ -5,7 +5,7 @@ export async function geocode(city: string): Promise<GeocodeResult | null> {
 
   const res = await fetch(url, {
     headers: {
-      "User-Agent": "nortus-challenge", // Nominatim requires a user-agent
+      "User-Agent": "nortus-challenge",
     },
   });
 

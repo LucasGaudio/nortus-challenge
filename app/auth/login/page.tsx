@@ -50,19 +50,16 @@ export default function LoginPage() {
     try {
       const response = await authService.login(formData.email, formData.password);
 
-      // Backend returns only the token
       const token = response?.access_token;
 
       if (!token) {
         throw new Error("A API não retornou access_token");
       }
 
-      // Save token and user email (Zustand + cookie/localStorage)
       login(formData.email, token);
 
       toast.success("Autenticado com sucesso!");
 
-      // Redirect to protected area
       router.replace("/dashboard");
     } catch (err) {
       const errorMessage =
@@ -130,7 +127,6 @@ export default function LoginPage() {
             aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
           >
             {showPassword ? (
-              // Open eye icon
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -151,7 +147,6 @@ export default function LoginPage() {
                 />
               </svg>
             ) : (
-              // Closed eye icon
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

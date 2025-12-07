@@ -15,12 +15,10 @@ export function TicketsTable({ tickets }: TicketsTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(tickets.length / ITEMS_PER_PAGE);
 
-  // Reset to page 1 when tickets change (e.g., after filtering)
   useEffect(() => {
     setCurrentPage(1);
   }, [tickets.length]);
 
-  // Calculate paginated tickets
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const paginatedTickets = tickets.slice(startIndex, endIndex);

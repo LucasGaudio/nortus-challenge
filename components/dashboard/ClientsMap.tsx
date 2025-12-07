@@ -22,15 +22,14 @@ interface ClientsMapProps {
   clients: Client[];
 }
 
-// Color mapping based on secureType
 const getMarkerColor = (secureType: string): string => {
   const colors: Record<string, string> = {
-    basic: "#3b82f6", // blue
-    standard: "#10b981", // green
-    premium: "#f59e0b", // amber
-    enterprise: "#8b5cf6", // purple
+    basic: "#3b82f6",
+    standard: "#10b981",
+    premium: "#f59e0b", 
+    enterprise: "#8b5cf6",
   };
-  return colors[secureType.toLowerCase()] || "#6b7280"; // default gray
+  return colors[secureType.toLowerCase()] || "#6b7280"; 
 };
 
 export function ClientsMap({ clients }: ClientsMapProps) {
@@ -80,7 +79,6 @@ export function ClientsMap({ clients }: ClientsMapProps) {
             geometry: new Point(fromLonLat([coords.lon, coords.lat])),
           });
 
-          // Store client info in feature for potential popup/tooltip
           feature.set("clientName", client.name);
           feature.set("clientLocation", client.location);
           feature.set("secureType", client.secureType);
@@ -108,10 +106,8 @@ export function ClientsMap({ clients }: ClientsMapProps) {
         }
       }
 
-      // Add all features at once
       vectorSource.addFeatures(features);
 
-      // Fit map to show all markers if we have any
       if (features.length > 0) {
         const extent = vectorSource.getExtent();
         if (extent && extent[0] !== Infinity) {
@@ -122,12 +118,10 @@ export function ClientsMap({ clients }: ClientsMapProps) {
         }
       }
 
-      console.log(`Loaded ${features.length} markers on the map`);
     }
 
     loadMarkers();
 
-    // Cleanup function
     return () => {
       if (mapInstanceRef.current) {
         mapInstanceRef.current.setTarget(undefined);

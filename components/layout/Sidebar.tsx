@@ -10,7 +10,6 @@ function getInitials(user: User | null): string {
   if (!user) return "??";
 
   if (user.email) {
-    // Get first 2 letters from email (before @)
     const emailPart = user.email.split("@")[0];
     return emailPart.substring(0, 2).toUpperCase();
   }
@@ -26,7 +25,6 @@ export function Sidebar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {

@@ -4,7 +4,6 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import { KPIChartData } from "@/types";
 
-// ApexCharts needs to be loaded dynamically in Next.js
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 interface KPIChartProps {

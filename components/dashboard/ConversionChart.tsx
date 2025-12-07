@@ -23,14 +23,13 @@ export function ConversionChart({ data }: ConversionChartProps) {
       },
     },
 
-    // ⭐ GRADIENTE igualzinho ao Figma
     fill: {
       type: "gradient",
       opacity: 0.9,
       gradient: {
         type: "vertical",
         shadeIntensity: 0.3,
-        gradientToColors: ["#70d2f1"], // fica mais claro embaixo
+        gradientToColors: ["#70d2f1"], 
         inverseColors: false,
         opacityFrom: 0.9,
         opacityTo: 0.6,
@@ -40,10 +39,9 @@ export function ConversionChart({ data }: ConversionChartProps) {
 
     colors: ["#4CD3CD"],
 
-    // ⭐ GRID IGUAL AO Figma
     grid: {
       show: true,
-      borderColor: "#334155", // bem suave
+      borderColor: "#334155",
       strokeDashArray: 4,
       position: "back",
       yaxis: {
@@ -54,7 +52,6 @@ export function ConversionChart({ data }: ConversionChartProps) {
       },
     },
 
-    // ⭐ EIXO X
     xaxis: {
       categories: data.labels,
       axisTicks: { show: false },
@@ -67,7 +64,6 @@ export function ConversionChart({ data }: ConversionChartProps) {
       },
     },
 
-    // ⭐ EIXO Y (aparece no Figma)
     yaxis: {
       labels: {
         style: {
@@ -81,7 +77,7 @@ export function ConversionChart({ data }: ConversionChartProps) {
     },
 
     dataLabels: { enabled: false },
-    stroke: { width: 0 }, // remove a borda bugada
+    stroke: { width: 0 },
   };
 
   const series = [

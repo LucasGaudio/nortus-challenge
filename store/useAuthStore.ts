@@ -18,7 +18,6 @@ interface AuthState {
 export const useAuthStore = create<AuthState>()(
   persist(
     devtools((set) => ({
-      // Initial state (server-friendly)
       user: null,
       token: null,
 
@@ -35,9 +34,7 @@ export const useAuthStore = create<AuthState>()(
       },
 
       login: (email, token) => {
-        // Create user object from email provided at login
         const user: User = { email };
-        // Save via helpers (cookie + localStorage) and update state
         saveUser(user);
         saveToken(token);
         set({ user, token });
@@ -53,18 +50,16 @@ export const useAuthStore = create<AuthState>()(
       },
 
       hydrateFromStorage: () => {
-        // Force read from helpers (useful in providers if needed)
         const user = getUser();
         const token = getToken();
         set({ user, token });
       },
     })),
     {
-      name: "auth-storage", // localStorage key
+      name: "auth-storage", 
       partialize: (state) => ({ user: state.user, token: state.token }),
     }
   )
 );
 
-// Export direct store reference for use outside React (server, redirects)
 export const authStore = useAuthStore;

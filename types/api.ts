@@ -1,5 +1,3 @@
-// API Response Types
-
 export interface LoginResponse {
   access_token: string;
 }

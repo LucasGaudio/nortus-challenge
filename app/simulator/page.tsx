@@ -40,7 +40,6 @@ export default function SimulatorPage() {
 
   const { includedBenefits, plansIndicators } = data;
 
-  // Aplica cálculo dinâmico dos planos
   const updatedPlans = plansIndicators.map((plan) => ({
     ...plan,
     totalValue: calcPlanValue(plan.value, coverages),

@@ -23,11 +23,8 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (res) => res,
   async (error: AxiosError) => {
-    // If 401 - invalid/expired token, logout and redirect
     if (error.response?.status === 401) {
       try {
-        // Could add refresh token logic here
-        // If no refresh token, clear session and redirect
         logoutAndRedirect();
       } catch (err) {
         logoutAndRedirect();

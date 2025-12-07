@@ -4,22 +4,18 @@ import { redirect } from "next/navigation";
 export default async function LoginLayout({ children }: { children: React.ReactNode }) {
   const token = (await cookies()).get("token")?.value;
 
-  // If user is already logged in, redirect to dashboard
   if (token) {
     redirect("/dashboard");
   }
 
   return (
     <div className="min-h-screen w-full flex bg-[#0C1220]">
-      {/* Coluna esquerda */}
       <div className="flex flex-col justify-center px-20 w-1/2 text-white">
         <h1 className="text-4xl font-bold mb-10 text-blue-400">Nortus</h1>
         {children}
       </div>
 
-      {/* Coluna direita */}
       <div className="relative w-1/2 flex items-center justify-center p-10">
-        {/* Botões no topo direito */}
         <div className="absolute top-8 right-8 flex gap-3">
           <button className="px-4 py-2 bg-[#1E293B] text-white rounded-xl text-sm flex items-center gap-2">
             🎧 Ajuda
@@ -30,12 +26,11 @@ export default async function LoginLayout({ children }: { children: React.ReactN
           </button>
         </div>
 
-        {/* Imagem ilustrativa */}
-        <div className="rounded-3xl overflow-hidden shadow-2xl max-w-lg ">
+        <div className="rounded-3xl overflow-hidden shadow-2xl ">
           <img
             src="/images/login-image.png"
             alt="Ilustração"
-            className="w-full h-full object-cover"
+            className="w-full h-full"
           />
         </div>
       </div>
