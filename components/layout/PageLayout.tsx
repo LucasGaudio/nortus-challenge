@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Sidebar } from "./Sidebar";
-import { Topbar } from "./Topbar";
+import Topbar from "./Topbar";
 
 interface PageLayoutProps {
   title: string;
